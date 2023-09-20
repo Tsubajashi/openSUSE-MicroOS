@@ -260,11 +260,11 @@ function SP_CHECK_GPU_DRIVER {
         echo -e "${GREEN}After a restart, the latest graphics card driver is installed and activated!${NOCOLOR}"
     elif [[ $(lspci | grep VGA) == *"NVIDIA"* ]]; then
         GPU_DRIVER="nvidia"
-        if [[ $(zypper search --installed-only) == *"x11-video-nvidiaG05"*"libvulkan1"*"libvulkan1-32bit"* ]]; then
+        if [[ $(zypper search --installed-only) == *"nvidia-video-G06"*"nvidia-gl-G06"*"libvulkan1"*"libvulkan1-32bit"* ]]; then
             echo -e "${GREEN}The latest graphics card driver is already installed.${NOCOLOR}"
         else
             if [[ $(zypper lr -u) == *"https://download.nvidia.com/opensuse/tumbleweed"* ]] || [[ $(zypper lr -u) == *"https://developer.download.nvidia.com/compute/cuda/repos/opensuse15/x86_64/cuda-opensuse15.repo"* ]]; then
-                sudo transactional-update -c pkg install x11-video-nvidiaG05 libvulkan1 libvulkan1-32bit
+                sudo transactional-update -c pkg install nvidia-video-G06 nvidia-gl-G06 libvulkan1 libvulkan1-32bit
                 echo -e "${GREEN}After a restart, the latest graphics card driver is installed and activated!${NOCOLOR}"
             else
                 read -p "${YELLOW}Do you want to install the NVIDIA drivers with full CUDA support? [yn] ${NOCOLOR}" answer
